@@ -17,14 +17,7 @@ public class Main {
 			food[i][0] = Integer.parseInt(st.nextToken());
 			food[i][1] = Integer.parseInt(st.nextToken());
 		}
-	
-		for(int i=0; i<N; i++)
-			min = Math.min(min, Math.abs(food[i][0]-food[i][1]));
-		
-		if(N==1) {
-			System.out.println(min);
-			return;
-		}
+
 		SubSet(0, 1, 0);
 		System.out.println(min);
 	}
