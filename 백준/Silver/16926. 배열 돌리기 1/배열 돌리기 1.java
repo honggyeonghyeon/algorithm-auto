@@ -3,8 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+
 public class Main {
-	static int n, m, r, k, i, j;
+	static int n, m, r, k;
 	static int array[][], result[][];
 	static int dx[] = {0, 1, 0, -1};
 	static int dy[] = {1, 0, -1, 0};
@@ -19,16 +20,18 @@ public class Main {
 		n = N;
 		m = M;
 		r = R;
-		k = Math.min(n, m)/2;
-		array = new int[N][M];
-		result = new int[N][M];
 		
-		for(int i=0; i<N; i++) {
+		k = Math.min(n, m)/2; //루프를 돌 박스 개수
+		array = new int[n][m];
+		result = new int[n][m];
+		
+		for(int i=0; i<n; i++) {
 			st =  new StringTokenizer(br.readLine());
-			for(int j=0; j<M; j++) {
+			for(int j=0; j<m; j++) {
 				array[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
+		
 		loofBox(0);
 		
 		for(int i=0; i<N; i++) {
@@ -45,49 +48,28 @@ public class Main {
 		int x = cnt;
 		int y = cnt;
 		for(int i=0; i<R; i++) {
+			if(x+dx[idx]<cnt||x+dx[idx]>=(n+cnt)||y+dy[idx]<cnt||y+dy[idx]>=(m+cnt)) idx = (idx+1)%4;
 			x+=dx[idx];
 			y+=dy[idx];
-			if(x<cnt||x>=(n+cnt)||y<cnt||y>=(m+cnt)) {
-				x-=dx[idx];
-				y-=dy[idx];
-				idx = (idx+1)%4;
-				x+=dx[idx];
-				y+=dy[idx];
-			}
 		}
-		i = cnt; 
-		j = cnt;
-		printArray(x, y, cnt);
+		printArray(x, y, cnt, cnt, cnt);
 		n -= 2;
 		m -= 2;
-		idx = 0;
 		loofBox(cnt+1);
 	}
 	
-	private static void printArray(int x, int y, int cnt) {
-		result[i][j] = array[x][y];
-		for(int a=0; a<(2*(m+n)-5); a++) {
+	private static void printArray(int x, int y, int cnt, int i, int j) {
+		for(int a=0; a<(2*(m+n)-4); a++) {
+			result[i][j] = array[x][y];
+			if(x+dx[idx]<cnt||x+dx[idx]>=(n+cnt)||y+dy[idx]<cnt||y+dy[idx]>=(m+cnt)) idx = (idx+1)%4;
+			if(i+dx[index]<cnt||i+dx[index]>=(n+cnt)||j+dy[index]<cnt||j+dy[index]>=(m+cnt))index = (index+1)%4;
 			i += dx[index];
 			j += dy[index];
 			x += dx[idx];
 			y += dy[idx];
-			if(x<cnt||x>=(n+cnt)||y<cnt||y>=(m+cnt)) {
-				x-=dx[idx];
-				y-=dy[idx];
-				idx = (idx+1)%4;
-				x += dx[idx];
-				y += dy[idx];
-			}
-			if(i<cnt||i>=(n+cnt)||j<cnt||j>=(m+cnt)) {
-				i-=dx[index];
-				j-=dy[index];
-				index = (index+1)%4;
-				i += dx[index];
-				j += dy[index];
-			}
-			result[i][j] = array[x][y];
 		}
 		index = 0;
+		idx = 0;
 	}
 
 }
