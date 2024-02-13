@@ -5,13 +5,15 @@ import java.util.StringTokenizer;
 
 public class Main {
 	static int N, result = Integer.MAX_VALUE;
-	static int S[][];
+	static int S[][], start[], link[];
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = null;
 		N = Integer.parseInt(br.readLine());
 		S = new int[N][N];
+		start = new int[N/2];
+		link = new int[N/2];
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for(int j=0; j<N; j++) {
@@ -25,25 +27,28 @@ public class Main {
 
 	private static void comb(int idx, int num, int flag) {
 		if(idx==N/2) {
-			sum(flag);
+			int index = 0;
+			for(int i=0; i<N; i++) {
+				if((flag & 1<<i) == 0) link[index++] = i;
+			}
+			sum();
 			return;
 		}
 		for(int i=num; i<N; i++) {
+			start[idx] = i;
 			comb(idx+1, i+1, flag | (1<<i));
 		}
 	}
-
-	private static void sum(int flag) {
-		int start = 0, link = 0;
-		for(int i=0; i<N; i++) {
-			for(int j=0; j<N; j++) {
-				if((flag&1<<i)!=0 && (flag&1<<j)!=0)
-					start += S[i][j];
-				else if((flag&1<<i)==0 && (flag&1<<j)==0)
-					link += S[i][j];
+    
+	private static void sum() {
+		int s = 0, l = 0;
+		for(int i=0; i<N/2; i++) {
+			for(int j=i; j<N/2; j++) {
+				s += S[start[i]][start[j]]+S[start[j]][start[i]];
+				l += S[link[i]][link[j]]+S[link[j]][link[i]];
 			}
 		}
-		result = Math.min(result, Math.abs(start-link));
+		result = Math.min(result, Math.abs(s-l));
 	}
 
 }
