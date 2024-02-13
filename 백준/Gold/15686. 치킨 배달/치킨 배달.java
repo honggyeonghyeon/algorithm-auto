@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N, M, m, choice[][], min = Integer.MAX_VALUE;
+	static int N, M, choice[][], min = Integer.MAX_VALUE;
 	static List<city> chicken = new ArrayList<>();
 	static List<city> home = new ArrayList<>();
-	static boolean isSelected[];
 	
 	static class city {
 		int r, c;
@@ -26,49 +25,29 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		choice = new int[M][2];
+		choice = new int[M][2]; 
 		
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for(int j=0; j<N; j++) {
 				int k = Integer.parseInt(st.nextToken());
-				if(k==1) home.add(new city(i, j));
-				else if(k==2) chicken.add(new city(i, j));
+				if(k==1) home.add(new city(i, j)); 
+				else if(k==2) chicken.add(new city(i, j)); 
 			}
 		}
-		
-		isSelected = new boolean[chicken.size()];
-		m = Math.min(M, chicken.size()-M);
 		comb(0, 0);
 		System.out.println(min);
 	}
-
+    
 	private static void comb(int idx, int num) {
-		if(idx==m) {
-			int k = 0;
-			for(int i=0; i<chicken.size(); i++) {
-				if(M == m) {
-					if(isSelected[i]) {
-						choice[k][0] = chicken.get(i).r; 
-						choice[k][1] = chicken.get(i).c;
-						k++;
-					}
-				}else {
-					if(!isSelected[i]) {
-						choice[k][0] = chicken.get(i).r; 
-						choice[k][1] = chicken.get(i).c;
-						k++;
-					}
-				}
-			}
+		if(idx==M) {
 			minDist();
 			return;
 		}
 		for(int i=num; i<chicken.size(); i++) {
-			if(isSelected[i]) continue;
-			isSelected[i] = true;
+			choice[idx][0] = chicken.get(i).r;
+			choice[idx][1] = chicken.get(i).c;
 			comb(idx+1, i+1);
-			isSelected[i] = false;
 		}
 	}
 
