@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 
 public class Main {
 	static int K, N;
-	static long result;
 	static int arr[];
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,28 +16,29 @@ public class Main {
 		for(int i=0; i<K; i++) arr[i] = Integer.parseInt(br.readLine());
 		Arrays.sort(arr);
 		
+		long result = 0;
+		
 		if(N!=K) result = search(1, arr[K-1]);
 		else result = Math.max(arr[0], search(1, arr[K-1]));
 		
 		System.out.println(result);
 	}
+	
 	private static long search(long start, long end) {
 		int count = 0;
-		long result = 0;
+		long result = (start+end)/2;
 		while(start <= end) {
 			long mid = (start+end)/2;
 			count = 0;
 			for(int i=0; i<K; i++) {
 				count += (arr[i]/mid);
 			}
-			if(count == N) {
-				result = Math.max(mid, search(mid+1, end));
-				return result;
+			if(count >= N) {
+				result = mid;
+				start = mid+1;
 			}
-			else if(count < N) end = mid-1;
-			else start = mid+1;
+			else end = mid-1;
 		}
-		return (start+end)/2;
+		return result;
 	}
-
 }
