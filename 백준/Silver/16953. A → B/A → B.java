@@ -8,25 +8,17 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		int count = 0;
+		int A = Integer.parseInt(st.nextToken());
+		int B = Integer.parseInt(st.nextToken());
+		int count = 1;
 		
-		while(true) {
+		while(B>A) {
+			if(B%10 == 1) B /= 10;
+			else if(B%2 == 0) B /= 2;
+			else break;
 			count++;
-			if(N>M) {
-				count = -1;
-				break;
-			}
-			if(N==M) break;
-			if(M%10 == 1) M /= 10;
-			else if(M%2 == 1) {
-				count = -1;
-				break;
-			}
-			else M /= 2;
 		}
 		
-		System.out.println(count);
+		System.out.println(A==B?count:-1);
 	}
 }
