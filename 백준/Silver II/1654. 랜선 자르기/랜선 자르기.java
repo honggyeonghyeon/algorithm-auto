@@ -25,11 +25,10 @@ public class Main {
 	}
 	
 	private static long search(long start, long end) {
-		int count = 0;
 		long result = (start+end)/2;
 		while(start <= end) {
 			long mid = (start+end)/2;
-			count = 0;
+			int count = 0;
 			for(int i=0; i<K; i++) {
 				count += (arr[i]/mid);
 			}
@@ -41,4 +40,5 @@ public class Main {
 		}
 		return result;
 	}
+
 }
