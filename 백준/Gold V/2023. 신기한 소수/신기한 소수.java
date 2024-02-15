@@ -6,29 +6,28 @@ import java.util.List;
 
 public class Main {
 	static int N;
-	static List<Integer> prime = new ArrayList<Integer>();
-	static List<Integer> p = new ArrayList<Integer>();
+	static int one[] = {2, 3, 5, 7}, two[] = {1, 3, 7, 9};
+	static StringBuilder sb = new StringBuilder();
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
-		p.add(2); p.add(3); p.add(5); p.add(7); //1의 자리 소수
-		int one[] = {1, 3, 7, 9}; //마지막 자리에 올 수 있는 소수
 		
-		for(int n=1; n<N; n++) {
-			for(Integer i : p) {
-				for(int j=0; j<4; j++) {
-					int num = i*10 + one[j];
-					if(isPrime(num)) prime.add(num);
-				}
-			}
-			p.clear();
-			p.addAll(prime);
-			prime.clear();
+		for (int num : one) {
+			PrimeNum(1, num);
 		}
 		
-		for (Integer number : p) {
-			System.out.println(number);
+		System.out.println(sb);
+	}
+
+	private static void PrimeNum(int cnt, int num) {
+		if(cnt == N) {
+			sb.append(num).append('\n');
+			return;
+		}
+		for(int j=0; j<4; j++) {
+			int n = num*10 + two[j];
+			if(isPrime(n)) PrimeNum(cnt+1, n);
 		}
 	}
 
