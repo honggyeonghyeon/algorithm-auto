@@ -49,7 +49,7 @@ public class Main {
 	}
 	
 	private static void dfs(int idx, int v) {
-		if(idx == N) return;
+		//if(idx == N) return;
 		d[v] = true;
 		sb.append(v).append(' ');
 		for(int i : list[v]) {
