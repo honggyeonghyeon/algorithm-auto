@@ -5,8 +5,11 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+/* 100984KB	892ms
+ * 
+ */
 public class Main {
-	static int N, M, date;
+	static int N, M, date, cnt;
 	static int[][] tomato;
 	static int[] dx = {1, 0, -1, 0}, dy = {0, 1, 0, -1};
 	static Queue<int[]> q = new ArrayDeque<>();
@@ -23,10 +26,11 @@ public class Main {
 			for(int j=0; j<M; j++) {
 				tomato[i][j] = Integer.parseInt(st.nextToken());
 				if(tomato[i][j]==1) q.add(new int[] {i, j});
+				else if(tomato[i][j]==0) cnt++;
 			}
 		}
 		
-		while(!check()) {
+		while(cnt>0) {
 			if(q.isEmpty()) {
 				date = -1;
 				break;
@@ -50,6 +54,7 @@ public class Main {
 				if(tomato[nx][ny] == 0) {
 					tomato[nx][ny] = 1;
 					q.add(new int[] {nx, ny});
+					cnt--;
 				}
 			}
 		}
@@ -60,18 +65,18 @@ public class Main {
 		return x>=0 && x<N && y>=0 && y<M;
 	}
 
-	private static boolean check() {
-		boolean b = true;
-		A : for(int i=0; i<N; i++) {
-			for(int j=0; j<M; j++) {
-				if(tomato[i][j] == -1) continue;
-				if(tomato[i][j] == 0) {
-					b = false;
-					break A;
-				}
-			}
-		}
-		return b;
-	}
+//	private static boolean check() {
+//		boolean b = true;
+//		A : for(int i=0; i<N; i++) {
+//			for(int j=0; j<M; j++) {
+//				if(tomato[i][j] == -1) continue;
+//				if(tomato[i][j] == 0) {
+//					b = false;
+//					break A;
+//				}
+//			}
+//		}
+//		return b;
+//	}
 
 }
